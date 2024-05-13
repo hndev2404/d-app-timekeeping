@@ -1,0 +1,15 @@
+version: '3'
+services:
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+  postgres:
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: be_earning
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
