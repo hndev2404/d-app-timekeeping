@@ -6,7 +6,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/hndev2404/interview_beearning/config"
 	"github.com/hndev2404/interview_beearning/dto"
 	"github.com/hndev2404/interview_beearning/helpers"
 	"github.com/hndev2404/interview_beearning/models"
@@ -22,7 +21,7 @@ func Signup(c *gin.Context) {
 	}
 
 	// Register User
-	user, err := services.RegisterUser(c, body)
+	user, err := services.RegisterUser(body)
 
 	if err != nil {
 		helpers.ResonseError(c, err)
@@ -39,30 +38,15 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	// Find the user
-	var user models.User
-	config.DB.First(&user, "email = ?", body.Email)
-
-	if user.ID == 0 {
-		helpers.ResonseError(c, errors.New("user not found"))
-		return
-	}
-
-	err := services.ValidatePassword([]byte(user.Password), []byte(body.Password))
-
-	if err != nil {
-		helpers.ResonseError(c, errors.New("invalid email or password"))
-		return
-	}
-
-	tokenString, err := services.GenerateToken(&user)
+	// Get token & user data
+	token, user, err := services.Login(body)
 	if err != nil {
 		helpers.ResonseError(c, err)
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"token": tokenString,
+		"token": token,
 		"user":  user,
 	})
 }
@@ -78,7 +62,7 @@ func Profile(c *gin.Context) {
 	// Get profile based on token
 	userId := user.(models.User).ID
 
-	var userData models.User
-	config.DB.First(&userData, userId)
+	userData := services.GetProfileBaseOnUserId(userId)
+
 	c.JSON(http.StatusOK, gin.H{"user": userData})
 }

@@ -38,7 +38,6 @@ func VerifyToken(jwtToken string) (*jwt.Token, error) {
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 
-	fmt.Println(os.Getenv("JWT_SECRET"), err)
 	if err != nil {
 		return nil, errors.New("bad jwt token")
 	}
