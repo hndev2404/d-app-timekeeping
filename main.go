@@ -12,7 +12,6 @@ import (
 func init() {
 	config.LoadEnvVariables()
 	config.ConnectToDb()
-	config.SyncDatabase()
 	config.RegisterValidator()
 }
 func main() {
