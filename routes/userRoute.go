@@ -6,8 +6,10 @@ import (
 	"github.com/hndev2404/interview_beearning/middlewares"
 )
 
-func UserRoute(router *gin.Engine) {
-	router.GET("/profile", middlewares.Authentication, controllers.Profile)
-	router.POST("/login", controllers.Login)
-	router.POST("/signup", controllers.Signup)
+func UserRoute(router *gin.RouterGroup) {
+	userRouter := router.Group("/user")
+
+	userRouter.GET("/profile", middlewares.Authentication, controllers.Profile)
+	userRouter.POST("/login", controllers.Login)
+	userRouter.POST("/signup", controllers.Signup)
 }

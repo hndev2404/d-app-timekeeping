@@ -1,81 +1,29 @@
 package middlewares
 
 import (
-	"errors"
-	"fmt"
-	"net/http"
-	"os"
-	"strings"
-
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
-	"github.com/hndev2404/interview_beearning/initializers"
-	"github.com/hndev2404/interview_beearning/models"
+	"github.com/hndev2404/interview_beearning/helpers"
+	"github.com/hndev2404/interview_beearning/services"
 )
 
-func extractBearerToken(header string) (string, error) {
-	if header == "" {
-		return "", errors.New("bad header value given")
-	}
-
-	jwtToken := strings.Split(header, " ")
-	if len(jwtToken) != 2 {
-		return "", errors.New("incorrectly formatted authorization header")
-	}
-
-	return jwtToken[1], nil
-}
-
-func parseToken(jwtToken string) (*jwt.Token, error) {
-	token, err := jwt.Parse(jwtToken, func(token *jwt.Token) (interface{}, error) {
-		if _, OK := token.Method.(*jwt.SigningMethodHMAC); !OK {
-			return nil, errors.New("bad signed method received")
-		}
-		return []byte(os.Getenv("SECRET")), nil
-	})
-
-	if err != nil {
-		fmt.Println(err)
-		return nil, errors.New("bad jwt token")
-	}
-
-	return token, nil
-}
-
 func Authentication(c *gin.Context) {
-	jwtToken, err := extractBearerToken(c.GetHeader("Authorization"))
+	jwtToken, err := services.GetTokenFromBearerToken(c.GetHeader("Authorization"))
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-		})
-		return
-	}
-	// Decode/ valiate token
-	token, err := parseToken(jwtToken)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-		})
+		helpers.ResonseError(c, err)
 		return
 	}
 
-	claims, OK := token.Claims.(jwt.MapClaims)
-	if !OK {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"message": "unable to parse claims",
-		})
-		return
-	}
-	userId := claims["sub"]
-	if userId == nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "no sub property in claims",
-		})
+	token, err := services.VerifyToken(jwtToken)
+	if err != nil {
+		helpers.ResonseError(c, err)
 		return
 	}
 
-	var user models.User
-	initializers.DB.First(&user, userId)
+	user, err := services.GetUserFromToken(token)
+	if err != nil {
+		helpers.ResonseError(c, err)
+		return
+	}
 
 	c.Set("user", user)
 	c.Next()
