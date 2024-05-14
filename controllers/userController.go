@@ -46,7 +46,7 @@ func Signup(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"user":  user,})
+	c.JSON(http.StatusOK, gin.H{"user": user})
 }
 
 func Login(c *gin.Context) {
@@ -107,5 +107,16 @@ func Login(c *gin.Context) {
 }
 
 func Profile(c *gin.Context) {
+	user, exists := c.Get("user")
 
+	if !exists {
+		
+	}
+	fmt.Println(user)
+	// userId := user.(models.User).ID
+
+	// // handle get profile
+	// var userData models.User
+	// initializers.DB.First(&userData, userId)
+	// c.JSON(http.StatusOK, gin.H{"user": userData})
 }
