@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"os"
+	"time"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -13,19 +14,26 @@ import (
 
 func main() {
 	config.LoadEnvVariables()
+	currentDateTime := time.Now().Format("2006-01-01_15:04:05")
+	f, err := os.OpenFile("./logs/deploy_smart_contract"+currentDateTime+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %v", err)
+	}
+	defer f.Close()
 
+	log.SetOutput(f)
 	client := config.DialClient()
 	contractAddress, trx, err := deployContract(client)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Transaction has been committed!!")
-	fmt.Println("--------------------------------")
-	fmt.Printf("Contract Address: \033[32m%s\033[0m\n", contractAddress.String())
-	fmt.Println("-----------------")
-	fmt.Printf("Transaction Hash: \033[32m%s\033[0m\n", trx.Hash())
-	fmt.Println("-----------------")
+	log.Println("Transaction has been committed!!")
+	log.Println("--------------------------------")
+	log.Printf("Contract Address: %s", contractAddress.String())
+	log.Println("-----------------")
+	log.Printf("Transaction Hash: %s", trx.Hash())
+	log.Println("-----------------")
 }
 
 func deployContract(client *ethclient.Client) (common.Address, *types.Transaction, error) {

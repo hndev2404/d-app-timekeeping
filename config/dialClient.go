@@ -35,7 +35,7 @@ func ConnectToETH() {
 
 	contractHex := os.Getenv("BC_CONTRACT_ADDRESS")
 	printContract := fmt.Sprintf("Contract Address: %s", contractHex)
-	fmt.Println(printContract)
+	log.Println(printContract)
 
 	contractAddress := common.HexToAddress("0xb83C51Fc6951653f60408575E588724ad8555871")
 	var err error
