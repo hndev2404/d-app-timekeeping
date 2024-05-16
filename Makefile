@@ -14,3 +14,9 @@ init-contract:
 
 deploy-contract:
 	go run cmd/deploySmartContract.go
+
+migrate-up:
+	migrate -path migrations/db -database "postgresql://user:password@localhost:5432/be_earning?sslmode=disable" -verbose up
+
+migrate-down:
+	migrate -path migrations/db -database "postgresql://user:password@localhost:5432/be_earning?sslmode=disable" -verbose down
