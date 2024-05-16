@@ -46,36 +46,27 @@ func AttendanceCheckIn(userId uint, data *dto.CheckInDTO) (*models.Attendance, e
 
 	// Storage Attendance to DB
 	attendance := &models.Attendance{
-		UserID:          userId,
-		Date:            data.Date,
-		CheckInTime:     data.CheckInTime,
-		CheckOutTime:    0,
-		TransactionHash: result.Hash().String(),
+		UserID:       userId,
+		Date:         data.Date,
+		CheckInTime:  data.CheckInTime,
+		CheckOutTime: 0,
 	}
 
-	err = attendance.CreateAttendance(config.DB)
+	transactionHash := result.Hash().String()
+
+	err = attendance.CheckInAttendance(config.DB, transactionHash)
 	return attendance, err
 }
 
-func AttendanceCheckOut(userId uint, data *dto.CheckInDTO) (*models.Attendance, error) {
+func AttendanceCheckOut(userId uint, data *dto.CheckoutDTO) (*models.Attendance, error) {
 	employeeID := helpers.ConvertUintToBigInt(userId)
 
-	var relevantDetails contract.RelevantDetails
-	relevantDetails.AddressInfo.Label = data.RelevantDetails.AddressInfo.Label
-	relevantDetails.AddressInfo.Details = data.RelevantDetails.AddressInfo.Details
-	relevantDetails.AddressInfo.Long = data.RelevantDetails.AddressInfo.Long
-	relevantDetails.AddressInfo.Lat = data.RelevantDetails.AddressInfo.Lat
-
-	relevantDetails.Imgs = data.RelevantDetails.Imgs
-	relevantDetails.Note = data.RelevantDetails.Note
-
 	auth := config.AuthGenerator(config.ETH_CLIENT)
-	result, err := config.ATTENDANCE_CONTRACT_INSTANCE.CheckIn(
+	result, err := config.ATTENDANCE_CONTRACT_INSTANCE.Checkout(
 		auth,
 		employeeID,
 		data.Date,
-		data.CheckInTime,
-		relevantDetails,
+		data.CheckoutTime,
 	)
 	if err != nil {
 		return nil, err
@@ -86,14 +77,13 @@ func AttendanceCheckOut(userId uint, data *dto.CheckInDTO) (*models.Attendance, 
 
 	// Storage Attendance to DB
 	attendance := &models.Attendance{
-		UserID:          userId,
-		Date:            data.Date,
-		CheckInTime:     data.CheckInTime,
-		CheckOutTime:    0,
-		TransactionHash: result.Hash().String(),
+		UserID:       userId,
+		Date:         data.Date,
+		CheckOutTime: data.CheckoutTime,
 	}
+	transactionHash := result.Hash().String()
 
-	err = attendance.CreateAttendance(config.DB)
+	err = attendance.CheckoutAttendance(config.DB, data.CheckoutTime, transactionHash)
 	return attendance, err
 }
 

@@ -1,13 +1,11 @@
 package controllers
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/hndev2404/interview_beearning/dto"
-	"github.com/hndev2404/interview_beearning/models"
 	"github.com/hndev2404/interview_beearning/response"
 	"github.com/hndev2404/interview_beearning/services"
 )
@@ -52,15 +50,12 @@ func Login(c *gin.Context) {
 }
 
 func Profile(c *gin.Context) {
-	user, exists := c.Get("user")
-
-	if !exists {
-		response.ResponseError(c, errors.New("must authentication before authorization"))
+	// Get current Employee ID
+	userId, err := services.GetUserIdFromToken(c)
+	if err != nil {
+		response.ResponseError(c, err)
 		return
 	}
-
-	// Get profile based on token
-	userId := user.(models.User).ID
 
 	userData := services.GetProfileBaseOnUserId(userId)
 

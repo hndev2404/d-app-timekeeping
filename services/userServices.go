@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 
+	"github.com/gin-gonic/gin"
 	"github.com/hndev2404/interview_beearning/config"
 	"github.com/hndev2404/interview_beearning/dto"
 	"github.com/hndev2404/interview_beearning/models"
@@ -47,5 +48,16 @@ func Login(data dto.LoginDTO) (token string, user models.User, err error) {
 	}
 
 	token, err = GenerateToken(&user)
+	return
+}
+
+func GetUserIdFromToken(c *gin.Context) (userId uint, err error) {
+	user, exists := c.Get("user")
+	if !exists {
+		err = errors.New("must authentication before authorization")
+		return
+	}
+
+	userId = user.(models.User).ID
 	return
 }
