@@ -9,19 +9,19 @@ import (
 func Authentication(c *gin.Context) {
 	jwtToken, err := services.GetTokenFromBearerToken(c.GetHeader("Authorization"))
 	if err != nil {
-		helpers.ResonseError(c, err)
+		helpers.ResponseError(c, err)
 		return
 	}
 
 	token, err := services.VerifyToken(jwtToken)
 	if err != nil {
-		helpers.ResonseError(c, err)
+		helpers.ResponseError(c, err)
 		return
 	}
 
 	user, err := services.GetUserFromToken(token)
 	if err != nil {
-		helpers.ResonseError(c, err)
+		helpers.ResponseError(c, err)
 		return
 	}
 
