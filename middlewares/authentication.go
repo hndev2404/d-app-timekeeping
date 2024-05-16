@@ -2,8 +2,8 @@ package middlewares
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/hndev2404/interview_beearning/response"
-	"github.com/hndev2404/interview_beearning/services"
+	"github.com/hndev2404/interview_prj/response"
+	"github.com/hndev2404/interview_prj/services"
 )
 
 func Authentication(c *gin.Context) {

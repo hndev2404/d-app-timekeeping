@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/hndev2404/interview_beearning/dto"
-	"github.com/hndev2404/interview_beearning/response"
-	"github.com/hndev2404/interview_beearning/services"
+	"github.com/hndev2404/interview_prj/dto"
+	"github.com/hndev2404/interview_prj/response"
+	"github.com/hndev2404/interview_prj/services"
 )
 
 func Signup(c *gin.Context) {

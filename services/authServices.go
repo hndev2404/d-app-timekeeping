@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/hndev2404/interview_beearning/config"
-	"github.com/hndev2404/interview_beearning/models"
+	"github.com/hndev2404/interview_prj/config"
+	"github.com/hndev2404/interview_prj/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

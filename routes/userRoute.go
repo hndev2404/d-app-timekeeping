@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/hndev2404/interview_beearning/controllers"
-	"github.com/hndev2404/interview_beearning/middlewares"
+	"github.com/hndev2404/interview_prj/controllers"
+	"github.com/hndev2404/interview_prj/middlewares"
 )
 
 func UserRoute(router *gin.RouterGroup) {

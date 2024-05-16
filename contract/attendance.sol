@@ -29,7 +29,7 @@ struct History {
 
 /**
  * @title AttendanceSmartContract
- * @dev A contract for managing employee attendance and releveant details
+ * @dev A contract for managing employee attendance and relevant details
  */
 contract AttendanceContract {
 

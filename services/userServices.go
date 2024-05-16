@@ -4,9 +4,9 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hndev2404/interview_beearning/config"
-	"github.com/hndev2404/interview_beearning/dto"
-	"github.com/hndev2404/interview_beearning/models"
+	"github.com/hndev2404/interview_prj/config"
+	"github.com/hndev2404/interview_prj/dto"
+	"github.com/hndev2404/interview_prj/models"
 )
 
 func RegisterUser(data dto.SignUpDTO) (models.User, error) {

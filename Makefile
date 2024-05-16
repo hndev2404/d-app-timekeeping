@@ -4,7 +4,7 @@ down:
 	docker compose down
 
 dev:
-	CompileDaemon --command="./interview_beearning"
+	CompileDaemon --command="./interview_prj"
 
 init-contract:
 	rm -rf build-contract

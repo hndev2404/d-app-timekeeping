@@ -12,8 +12,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/hndev2404/interview_beearning/contract"
-	"github.com/hndev2404/interview_beearning/helpers"
+	"github.com/hndev2404/interview_prj/contract"
+	"github.com/hndev2404/interview_prj/helpers"
 )
 
 var ETH_CLIENT *ethclient.Client

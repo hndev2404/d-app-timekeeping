@@ -2,11 +2,11 @@ package services
 
 import (
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/hndev2404/interview_beearning/config"
-	"github.com/hndev2404/interview_beearning/contract"
-	"github.com/hndev2404/interview_beearning/dto"
-	"github.com/hndev2404/interview_beearning/helpers"
-	"github.com/hndev2404/interview_beearning/models"
+	"github.com/hndev2404/interview_prj/config"
+	"github.com/hndev2404/interview_prj/contract"
+	"github.com/hndev2404/interview_prj/dto"
+	"github.com/hndev2404/interview_prj/helpers"
+	"github.com/hndev2404/interview_prj/models"
 )
 
 func GetOwnerAddress() (common.Address, error) {

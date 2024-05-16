@@ -8,8 +8,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/hndev2404/interview_beearning/config"
-	"github.com/hndev2404/interview_beearning/contract"
+	"github.com/hndev2404/interview_prj/config"
+	"github.com/hndev2404/interview_prj/contract"
 )
 
 func main() {
