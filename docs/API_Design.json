@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "fe22a9c2-8fe0-4d0b-a858-91e29c766bde",
+		"name": "INTERVIEW_PRJ",
+		"description": "A DApp manages employee attendance and details using Golang and Solidity. It leverages blockchain tech for transparency and security. Golang handles the backend, while Solidity creates smart contracts for recording and validating attendance on the blockchain.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33824986"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Employee Name\",\r\n    \"email\": \"hndev2404@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/user/signup",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"user",
+								"signup"
+							]
+						},
+						"description": "\n### User Signup\n\nThis endpoint allows users to sign up by providing their name, email, and password.\n\n#### Request Body\n- `name` (string, required): The name of the user.\n- `email` (string, required): The email address of the user.\n- `password` (string, required): The password for the user account.\n\n#### Response\nUpon successful signup, the endpoint returns a JSON object with the following fields:\n- `user` (object): An object containing the user details.\n  - `id` (number): The unique identifier for the user.\n  - `name` (string): The name of the user.\n  - `email` (string): The email address of the user.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"hndev2404@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/user/login",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "### User Login\n\nThis API endpoint allows users to log in and obtain a token for authentication.\n\n#### Request Body\n\n- **email** (text, required): The email address of the user.\n- **password** (text, required): The password of the user.\n    \n\n#### Response\n\nThe response is in JSON format and includes the following fields:\n\n- **token** (string): The authentication token for the logged-in user.\n- **user** (object):\n    - **id** (number): The unique identifier of the user.\n    - **name** (string): The name of the user.\n    - **email** (string): The email address of the user."
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5Nzk3MjgsInN1YiI6NH0.00obLqEvD7b_0dUgYVom4DTANKZ_bV9GcVDrPTBSwJw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"hoangnhutsp@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/user/profile",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						},
+						"description": "# User Profile\n\nThis endpoint retrieves the profile information of the user.\n\n## Request\n\n- Method: GET\n- URL: `{{v1}}/user/profile`\n    \n\n### Request Body\n\n- Type: Raw (application/json)\n- Parameters:\n    - email (string, required): The email of the user.\n    - password (string, required): The password of the user.\n\n## Response\n\nThe response is in JSON format and includes the following fields:\n\n- **user** (object):\n    - **id** (number): The unique identifier of the user.\n    - **name** (string): The name of the user.\n    - **email** (string): The email address of the user."
+					},
+					"response": []
+				}
+			],
+			"description": "The User Module API design includes:\n\n- POST SignUp for creating an account\n    \n- POST Login for authentication\n    \n- GET Profile for accessing and managing user profiles.",
+			"auth": {
+				"type": "bearer"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Owner Address",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5NDA2MDksInN1YiI6MX0.EGiOIArohwe2EINWOJY790OwgbDFpFZwBcuTSPboe38",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/attendance/addressOwner",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"addressOwner"
+							]
+						},
+						"description": "# Get Attendance Address Owner\n\nThis endpoint is used to retrieve the address owner for Smart Contract.\n\n## Request\n\n- Method: GET\n- URL: `{{v1}}/attendance/addressOwner`\n    \n\n## Response\n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n  \"owner\": \"0x8a9149e05d4480c61e3d0af7b9010bac3128488d\"\n}\n\n ```\n\n- `owner` (string): The adress of the address owner."
+					},
+					"response": []
+				},
+				{
+					"name": "All Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5Nzk3MjgsInN1YiI6NH0.00obLqEvD7b_0dUgYVom4DTANKZ_bV9GcVDrPTBSwJw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_v1}}/attendance/list",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"list"
+							]
+						},
+						"description": "### GET /attendance/list\n\nThis endpoint retrieves the all attendance list for Employee.\n\n#### Request\n\nNo request body is required for this request.\n\n#### Response\n\nThe response is a JSON object with the following schema:\n\n``` json\n{\n    \"data\": [\n        \"attendance\": {\n            \"date\": 20240103,\n            \"checkin_time\": 28800,\n            \"checkout_time\": 64800,\n            \"relevent_details\": {\n                \"address_info\": {\n                    \"label\": \"VINACONEX Saigon\",\n                    \"details\": \"47 Đ. Điện Biên Phủ, Đa Kao, Quận 1, Thành phố Hồ Chí Minh 70000, Vietnam\",\n                    \"lat\": 10791182,\n                    \"long\": 10669833\n                },\n                \"imgs\": [],\n                \"note\": \"note\"\n            }\n        },\n    ],\n    \"result\": \"SUCCEED\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance By Range Date",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5NDA2MDksInN1YiI6MX0.EGiOIArohwe2EINWOJY790OwgbDFpFZwBcuTSPboe38",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_v1}}/attendance/rangeDate?start_date=20240103&end_date=20240104",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"rangeDate"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "20240103"
+								},
+								{
+									"key": "end_date",
+									"value": "20240104"
+								}
+							]
+						},
+						"description": "The endpoint makes an HTTP GET request to retrieve attendance data within a specified date range. The request parameters include the start date and end date in the format 'YYYYMMDD'.\n\n#### Response\n\nThe response is a JSON object with the following schema:\n\n``` json\n{\n    \"data\": [\n        \"attendance\": {\n            \"date\": 20240103,\n            \"checkin_time\": 28800,\n            \"checkout_time\": 64800,\n            \"relevent_details\": {\n                \"address_info\": {\n                    \"label\": \"VINACONEX Saigon\",\n                    \"details\": \"47 Đ. Điện Biên Phủ, Đa Kao, Quận 1, Thành phố Hồ Chí Minh 70000, Vietnam\",\n                    \"lat\": 10791182,\n                    \"long\": 10669833\n                },\n                \"imgs\": [],\n                \"note\": \"note\"\n            }\n        },\n    ],\n    \"result\": \"SUCCEED\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5NDA2MDksInN1YiI6MX0.EGiOIArohwe2EINWOJY790OwgbDFpFZwBcuTSPboe38",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_v1}}/attendance/detail?index_attendance=1",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "index_attendance",
+									"value": "1"
+								}
+							]
+						},
+						"description": "### GET /attendance/detail\n\nThis endpoint retrieves the attendance details for a specific index.\n\n#### Request\n\n- Parameters\n    - `index_attendance` (integer, required): The index of the attendance record.\n\n#### Response\n\nThe response is a JSON object with the following schema:\n\n``` json\n{\n    \"data\": {\n        \"attendance\": {\n            \"date\": 20240103,\n            \"checkin_time\": 28800,\n            \"checkout_time\": 64800,\n            \"relevent_details\": {\n                \"address_info\": {\n                    \"label\": \"VINACONEX Saigon\",\n                    \"details\": \"47 Đ. Điện Biên Phủ, Đa Kao, Quận 1, Thành phố Hồ Chí Minh 70000, Vietnam\",\n                    \"lat\": 10791182,\n                    \"long\": 10669833\n                },\n                \"imgs\": [],\n                \"note\": \"note\"\n            }\n        },\n        \"history\": []\n    },\n    \"result\": \"SUCCEED\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5NDA2MDksInN1YiI6MX0.EGiOIArohwe2EINWOJY790OwgbDFpFZwBcuTSPboe38",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": 20240103,\r\n    \"checkInTime\": 28800,\r\n    \"checkoutTime\": 64800,\r\n    \"reason\": \"REASON UPDATE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/attendance/update",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"update"
+							]
+						},
+						"description": "### Update Attendance\n\nThis endpoint allows the user to update attendance records.\n\n#### Request\n\n- Method: POST\n- Endpoint: {{v1}}/attendance/update\n- Body (raw, JSON):\n    \n    ``` json\n        {\n          \"date\": 0,\n          \"checkInTime\": 0,\n          \"checkoutTime\": 0,\n          \"reason\": \"\"\n        }\n    \n     ```\n    \n\n#### Response\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n    \"data\": {\n        \"id\": 1,\n        \"user_id\": 1,\n        \"date\": 20240103,\n        \"checkin_time\": 28800,\n        \"checkout_time\": 64800\n    },\n    \"result\": \"SUCCEED\"\n}\n\n ```\n\nThe `data` object contains information about the check-in, including the `id`, `user_id`, `date`, `checkin_time`, and `checkout_time`. The `result` field may contain additional information about the check-in."
+					},
+					"response": []
+				},
+				{
+					"name": "Checkin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5NDA2MDksInN1YiI6MX0.EGiOIArohwe2EINWOJY790OwgbDFpFZwBcuTSPboe38",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": 20240103,\r\n    \"checkInTime\": 28800,\r\n    \"relevantDetails\": {\r\n        \"addressInfo\": {\r\n            \"label\": \"VINACONEX Saigon\",\r\n            \"details\": \"47 Đ. Điện Biên Phủ, Đa Kao, Quận 1, Thành phố Hồ Chí Minh 70000, Vietnam\",\r\n            \"lat\": 10791182,\r\n            \"long\": 10669833\r\n        },\r\n        \"imgs\": [\r\n            \"https://lh5.googleusercontent.com/p/AF1QipMHMsCgpSrn0Bct_Y7NX1vhs_owgYySMUEe-PA1=w408-h839-k-no\"\r\n        ],\r\n        \"note\": \"note\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/attendance/checkin",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"checkin"
+							]
+						},
+						"description": "### POST api/v1/attendance/checkin\n\nThis endpoint is used to check in for attendance.\n\n#### Request Body\n\n- `date` (Number) - The date of check-in.\n- `checkInTime` (Number) - The time of check-in.\n- `relevantDetails` (Object)\n    - `addressInfo` (Object)\n        - `label` (String) - The label for the address.\n        - `details` (String) - Details about the address.\n        - `lat` (Number) - The latitude of the address.\n        - `long` (Number) - The longitude of the address.\n    - `imgs` (Array) - Array of images related to the check-in.\n    - `note` (String) - Any additional note for the check-in.\n\n#### Response\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n    \"data\": {\n        \"id\": 3,\n        \"user_id\": 1,\n        \"date\": 20240103,\n        \"checkin_time\": 28800,\n        \"checkout_time\": 0\n    },\n    \"result\": \"SUCCEED\"\n}\n\n ```\n\nThe `data` object contains information about the check-in, including the `id`, `user_id`, `date`, `checkin_time`, and `checkout_time`. The `result` field may contain additional information about the check-in."
+					},
+					"response": []
+				},
+				{
+					"name": "Checkout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTU5NDA2MDksInN1YiI6MX0.EGiOIArohwe2EINWOJY790OwgbDFpFZwBcuTSPboe38",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": 20240103,\r\n    \"checkoutTime\": 64800\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_v1}}/attendance/checkout",
+							"host": [
+								"{{api_v1}}"
+							],
+							"path": [
+								"attendance",
+								"checkout"
+							]
+						},
+						"description": "### Attendance Checkout\n\nThis endpoint is used to record the checkout time for a user's attendance.\n\n#### Request Body\n\n- `date` (number) - The date for which the checkout is being recorded.\n- `checkoutTime` (number) - The checkout time to be recorded.\n    \n\n#### Response\n\n- Status: 200\n- Content-Type: application/json\n- `data` (object)\n    - `id` (number) - The unique ID of the attendance record.\n    - `user_id` (number) - The ID of the user for whom the attendance is being recorded.\n    - `date` (number) - The date for which the attendance is recorded.\n    - `checkin_time` (number) - The check-in time for the attendance record.\n    - `checkout_time` (number) - The check-out time for the attendance record.\n- `result` (string) - Additional result information."
+					},
+					"response": []
+				}
+			],
+			"description": "Attendance Management\n\n- GET Owner Address: Retrive the current owner address of smart contract\n    \n- GET All Attendance: Retrive all attendance by employee\n    \n- GET Attendance By Range Date: Retrive attendance by Start Date and End Date\n    \n- GET Attendance Detail: Retrive attendance detail include history of update.\n    \n- POST Update Attendance: Update CHECKIN/CHECKOUT\n    \n- POST Checkin: Check in attendance\n    \n- POST Checkout: Checkout out attendace"
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_v1}}/ping",
+					"host": [
+						"{{api_v1}}"
+					],
+					"path": [
+						"ping"
+					]
+				},
+				"description": "## Ping Endpoint\n\nThis endpoint sends a GET request to the server to check the availability and status of the service.\n\n### Request Body\n\nThis request does not require a request body.\n\n### Response Body\n\nThe response will include the status of the server, confirming whether the service is available or not."
+			},
+			"response": []
+		}
+	]
+}

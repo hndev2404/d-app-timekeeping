@@ -30,7 +30,7 @@ CREATE TABLE attendances (
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
     
-    action VARCHAR(255),
+    reason VARCHAR(255),
 
     user_id INTEGER REFERENCES users(id),
     attendance_id INTEGER REFERENCES attendances(id),

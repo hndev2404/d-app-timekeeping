@@ -1,6 +1,12 @@
 # GO Backend - Smart Contract
 A DApp manages employee attendance and details using Golang and Solidity. It leverages blockchain tech for transparency and security. Golang handles the backend, while Solidity creates smart contracts for recording and validating attendance on the blockchain.
 
+## Docs
+- [Overview System](docs/OverviewSystem.MD)
+- API Design:
+    - [Postman API Online](https://documenter.getpostman.com/view/33824986/2sA3JT1xF9)
+    - [Postman JSON](docs/API_Design.json)
+
 ## 🛠 Built With
 
 [![Go Badge](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=fff&style=for-the-badge)](https://go.dev/)

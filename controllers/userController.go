@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/hndev2404/interview_prj/dto"
@@ -19,13 +17,16 @@ func Signup(c *gin.Context) {
 	}
 
 	// Register User
-	user, err := services.RegisterUser(body)
+	token, user, err := services.RegisterUser(body)
 
 	if err != nil {
 		response.ResponseError(c, err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"user": user})
+	response.ResponseSucceed(c, gin.H{
+		"token": token,
+		"user":  user,
+	})
 }
 
 func Login(c *gin.Context) {
@@ -43,7 +44,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	response.ResponseSucceed(c, gin.H{
 		"token": token,
 		"user":  user,
 	})
@@ -58,6 +59,5 @@ func Profile(c *gin.Context) {
 	}
 
 	userData := services.GetProfileBaseOnUserId(userId)
-
-	c.JSON(http.StatusOK, gin.H{"user": userData})
+	response.ResponseSucceed(c, gin.H{"user": userData})
 }

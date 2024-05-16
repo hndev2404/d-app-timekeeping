@@ -38,9 +38,6 @@ func AttendanceCheckIn(userId uint, data *dto.CheckInDTO) (*models.Attendance, e
 		return nil, err
 	}
 
-	// TODO:
-	// - Validation transaction already created
-
 	// Storage Attendance to DB
 	attendance := &models.Attendance{
 		UserID:       userId,
@@ -94,12 +91,9 @@ func AttendanceList(userId uint) ([]contract.AttendanceData, error) {
 func AttendanceByRangeDate(userId uint, startDate uint32, endDate uint32) ([]contract.AttendanceData, error) {
 	employeeID := helpers.ConvertUintToBigInt(userId)
 
-	count, result, err := config.ATTENDANCE_CONTRACT_INSTANCE.GetAttendanceByRangeDate(nil, employeeID, startDate, endDate)
+	_, result, err := config.ATTENDANCE_CONTRACT_INSTANCE.GetAttendanceByRangeDate(nil, employeeID, startDate, endDate)
 
-	// Only get range 0-count
-	newResult := result[:count.Int64()]
-
-	return newResult, err
+	return result, err
 }
 
 func AttendanceDetail(userId uint, indexAttendance uint) (contract.AttendanceData, []contract.History, error) {

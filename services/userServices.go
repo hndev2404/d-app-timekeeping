@@ -9,21 +9,23 @@ import (
 	"github.com/hndev2404/interview_prj/models"
 )
 
-func RegisterUser(data dto.SignUpDTO) (models.User, error) {
+func RegisterUser(data dto.SignUpDTO) (string, models.User, error) {
 	var user models.User
 	hash, err := GeneratePassword([]byte(data.Password))
 	if err != nil {
-		return user, err
+		return "", user, err
 	}
 
 	user = models.User{Email: data.Email, Password: string(hash), Name: data.Name}
 	result := config.DB.Create(&user)
 
 	if result.Error != nil {
-		return user, result.Error
+		return "", user, result.Error
 	}
 
-	return user, nil
+	token, err := GenerateToken(&user)
+
+	return token, user, err
 }
 
 func GetProfileBaseOnUserId(userId uint) (profile models.User) {

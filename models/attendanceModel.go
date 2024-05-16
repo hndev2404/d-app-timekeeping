@@ -18,7 +18,7 @@ func (attendance *Attendance) CheckInAttendance(db *gorm.DB, transactionHash str
 	}
 
 	transaction := &Transaction{
-		Action:          ACTION.CHECKIN,
+		Reason:          REASON.CHECKIN,
 		UserID:          attendance.UserID,
 		AttendanceID:    attendance.ID,
 		TransactionHash: transactionHash,
@@ -42,7 +42,7 @@ func (attendance *Attendance) CheckoutAttendance(db *gorm.DB, checkoutTime uint3
 		return result.Error
 	}
 	transaction := &Transaction{
-		Action:          ACTION.CHECKOUT,
+		Reason:          REASON.CHECKOUT,
 		UserID:          attendance.UserID,
 		AttendanceID:    attendance.ID,
 		TransactionHash: transactionHash,
@@ -66,7 +66,7 @@ func (attendance *Attendance) UpdateAttendance(db *gorm.DB, newAttendance Attend
 		return result.Error
 	}
 	transaction := &Transaction{
-		Action:          reason,
+		Reason:          reason,
 		UserID:          attendance.UserID,
 		AttendanceID:    attendance.ID,
 		TransactionHash: transactionHash,
