@@ -30,9 +30,9 @@ func main() {
 
 	log.Println("Transaction has been committed!!")
 	log.Println("--------------------------------")
-	log.Printf("Contract Address: %s", contractAddress.String())
+	log.Printf("Contract Address: " + contractAddress.String())
 	log.Println("-----------------")
-	log.Printf("Transaction Hash: %s", trx.Hash())
+	log.Printf("Transaction Hash: " + trx.Hash().String())
 	log.Println("-----------------")
 }
 

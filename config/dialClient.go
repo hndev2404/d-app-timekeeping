@@ -37,7 +37,7 @@ func ConnectToETH() {
 	printContract := fmt.Sprintf("Contract Address: %s", contractHex)
 	log.Println(printContract)
 
-	contractAddress := common.HexToAddress("0xb83C51Fc6951653f60408575E588724ad8555871")
+	contractAddress := common.HexToAddress(contractHex)
 	var err error
 	ATTENDANCE_CONTRACT_INSTANCE, err = contract.NewContract(contractAddress, ETH_CLIENT)
 	if err != nil {

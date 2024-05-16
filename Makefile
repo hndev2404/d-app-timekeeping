@@ -6,11 +6,10 @@ down:
 dev:
 	CompileDaemon --command="./interview_beearning"
 
-solc-contract:
+init-contract:
 	rm -rf build-contract
+	rm -rf contract/attendance.go
 	solc --optimize --ir-optimized --bin --abi contract/attendance.sol -o build-contract
-
-abigen:
 	abigen --bin=build-contract/AttendanceContract.bin --abi=build-contract/AttendanceContract.abi --pkg=contract --out=contract/attendance.go
 
 deploy-smartcontract:

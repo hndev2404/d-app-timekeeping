@@ -1,12 +1,10 @@
 package dto
 
-import "math/big"
-
 type AddressInfoDTO struct {
-	Label   string   `json:"Label" binding:"required"`
-	Details string   `json:"details" binding:"required"`
-	Lat     *big.Int `json:"lat" binding:"required"`
-	Long    *big.Int `json:"long" binding:"required"`
+	Label   string `json:"Label" binding:"required"`
+	Details string `json:"details" binding:"required"`
+	Lat     uint32 `json:"lat" binding:"required"`
+	Long    uint32 `json:"long" binding:"required"`
 }
 
 type RelevantDetailsDTO struct {

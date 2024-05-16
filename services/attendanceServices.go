@@ -30,7 +30,7 @@ func AttendanceCheckIn(userId uint, data *dto.CheckInDTO) (*models.Attendance, e
 	relevantDetails.Note = data.RelevantDetails.Note
 
 	auth := config.AuthGenerator(config.ETH_CLIENT)
-	result, err := config.ATTENDANCE_CONTRACT_INSTANCE.CheckIn(
+	result, err := config.ATTENDANCE_CONTRACT_INSTANCE.Checkin(
 		auth,
 		employeeID,
 		data.Date,

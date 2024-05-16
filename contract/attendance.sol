@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.8.2 <0.9.0;
+pragma solidity 0.8.25;
 
 struct AddressInfo {
     string label;
     string details;
-    int256 lat;
-    int256 long;
+    uint32 lat;
+    uint32 long;
 }
 struct RelevantDetails {
     AddressInfo addressInfo;
@@ -193,7 +193,7 @@ contract AttendanceContract {
      */
     function getAllAttendanceByEmployeeID(
         uint256 employeeID
-    ) public view isOwner returns (AttendanceData[] memory) {
+    ) external view returns (AttendanceData[] memory) {
         AttendanceData[] memory allRecords = attendances[employeeID];
         return allRecords;
     }
@@ -209,7 +209,7 @@ contract AttendanceContract {
         uint256 employeeID,
         uint32 startDate,
         uint32 endDate
-    ) public view isOwner returns (uint, AttendanceData[] memory) {
+    ) external view returns (uint, AttendanceData[] memory) {
         require(
             startDate >= MIN_DATE,
             "Start Date must be large or equal than 1/01/01"
@@ -296,7 +296,7 @@ contract AttendanceContract {
     function getAttendanceDetail(
         uint256 employeeID,
         uint256 index
-    ) public view isOwner returns (AttendanceData memory, History[] memory) {
+    ) external view returns (AttendanceData memory, History[] memory) {
         require(
             attendances[employeeID].length > 0,
             "Employee ID does not exist in attendances"
