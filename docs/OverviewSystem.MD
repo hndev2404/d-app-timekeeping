@@ -401,10 +401,10 @@ Kết quả:
 OK
 ```
 
-## Limitation
-Vì thời gian thực hiện chỉ vỏn vẹn trong 3 ngày, nên source code còn một số khuyết điểm như sau:
+## TODO
+Vì thời gian thực hiện chỉ trong 3 ngày, nên source code cần cải thiện một số điểm sau đây:
 - Valiation
-    - Sử dụng Message mặc định của framework. Cần optimize để message mang tính `readable`
+    - Sử dụng Message mặc định của framework. Cần optimize để message mang tính dể đọc.
     - Chưa thực hiện vaidation đầy đủ tất cả use-case. Ví dụ giá trị input đầu vào là `20240150`. Tương đương với ngày `50-01-2024` => ngày không hợp lệ.
-- Uint Test
+- Unit Test
     - Không có unit test trên `Solidity` và `Backend`.
