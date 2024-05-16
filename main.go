@@ -13,6 +13,7 @@ func init() {
 	config.LoadEnvVariables()
 	config.ConnectToDb()
 	config.RegisterValidator()
+	config.ConnectToETH()
 }
 func main() {
 

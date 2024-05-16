@@ -1,3 +1,6 @@
 .env
 interview_beearning
 .vscode
+keystore
+tmp
+build-contract
