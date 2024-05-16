@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/hndev2404/interview_beearning/dto"
-	"github.com/hndev2404/interview_beearning/helpers"
 	"github.com/hndev2404/interview_beearning/models"
+	"github.com/hndev2404/interview_beearning/response"
 	"github.com/hndev2404/interview_beearning/services"
 )
 
@@ -16,7 +16,7 @@ func Signup(c *gin.Context) {
 	// Validation
 	var body dto.SignUpDTO
 	if err := c.ShouldBindWith(&body, binding.JSON); err != nil {
-		helpers.ResponseError(c, err)
+		response.ResponseError(c, err)
 		return
 	}
 
@@ -24,7 +24,7 @@ func Signup(c *gin.Context) {
 	user, err := services.RegisterUser(body)
 
 	if err != nil {
-		helpers.ResponseError(c, err)
+		response.ResponseError(c, err)
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
@@ -34,14 +34,14 @@ func Login(c *gin.Context) {
 	// Validation
 	var body dto.LoginDTO
 	if err := c.ShouldBindWith(&body, binding.JSON); err != nil {
-		helpers.ResponseError(c, err)
+		response.ResponseError(c, err)
 		return
 	}
 
 	// Get token & user data
 	token, user, err := services.Login(body)
 	if err != nil {
-		helpers.ResponseError(c, err)
+		response.ResponseError(c, err)
 		return
 	}
 
@@ -55,7 +55,7 @@ func Profile(c *gin.Context) {
 	user, exists := c.Get("user")
 
 	if !exists {
-		helpers.ResponseError(c, errors.New("must authentication before authorization"))
+		response.ResponseError(c, errors.New("must authentication before authorization"))
 		return
 	}
 

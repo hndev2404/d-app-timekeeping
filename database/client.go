@@ -3,8 +3,6 @@ package database
 import (
 	"log"
 
-	"github.com/hndev2404/interview_beearning/models"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,12 +17,4 @@ func Connect(connectionString string) {
 		panic("Cannot connect to DB")
 	}
 	log.Println("Connected to Database!")
-}
-func Migrate() {
-	Instance.AutoMigrate(&models.User{})
-	Instance.AutoMigrate(&models.AddressInfo{})
-	Instance.AutoMigrate(&models.RelevantDetails{})
-	Instance.AutoMigrate(&models.Attendance{})
-
-	log.Println("Database Migration Completed!")
 }

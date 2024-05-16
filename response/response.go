@@ -1,4 +1,4 @@
-package helpers
+package response
 
 import (
 	"net/http"
@@ -9,11 +9,10 @@ import (
 const SUCCEED = "SUCCEED"
 const ERROR = "ERROR"
 
-func ResponseError(c *gin.Context, err error, data any) {
+func ResponseError(c *gin.Context, err error) {
 	c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 		"result":  ERROR,
 		"message": err.Error(),
-		"data":    data,
 	})
 }
 
