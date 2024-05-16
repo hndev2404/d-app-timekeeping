@@ -2,26 +2,23 @@ package models
 
 import "gorm.io/gorm"
 
-// ActionStruct holds the enum values
 type Action struct {
 	CHECKIN  string
 	CHECKOUT string
-	UPDATE   string
 }
 
-// ACTION is the instance of ActionStruct with the enum values
+// ACTION is the instance of ActionStruct with the enum values for default CHECKIN/CHECKOUT Action
 var ACTION = Action{
 	CHECKIN:  "CHECKIN",
 	CHECKOUT: "CHECKOUT",
-	UPDATE:   "UPDATE",
 }
 
 type Transaction struct {
 	Model
-	Action          string
-	UserID          uint
-	AttendanceID    uint
-	TransactionHash string
+	Action          string `json:"action"`
+	UserID          uint   `json:"user_id"`
+	AttendanceID    uint   `json:"attendance_id"`
+	TransactionHash string `json:"transaction_hash"`
 }
 
 func (transaction *Transaction) CreateTransaction(db *gorm.DB) error {

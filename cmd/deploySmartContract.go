@@ -15,7 +15,7 @@ import (
 func main() {
 	config.LoadEnvVariables()
 	currentDateTime := time.Now().Format("2006-01-01_15:04:05")
-	f, err := os.OpenFile("./logs/deploy_smart_contract"+currentDateTime+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	f, err := os.OpenFile("./logs/deploy_smart_contract_"+currentDateTime+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}

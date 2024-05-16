@@ -20,15 +20,6 @@ func AttendanceOwner(c *gin.Context) {
 
 }
 
-func AttendanceList(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"message": "AttendanceList"})
-}
-
-func AttendanceDetail(c *gin.Context) {
-
-	c.JSON(http.StatusOK, gin.H{"message": "AttendanceDetail"})
-}
-
 func AttendanceCheckIn(c *gin.Context) {
 	// Validation
 	var body dto.CheckInDTO
@@ -73,4 +64,89 @@ func AttendanceCheckout(c *gin.Context) {
 	}
 
 	response.ResponseSucceed(c, data)
+}
+
+func AttendanceList(c *gin.Context) {
+	userId, err := services.GetUserIdFromToken(c)
+	if err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	data, err := services.AttendanceList(userId)
+	if err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+	response.ResponseSucceed(c, data)
+
+}
+
+func AttendanceByRangeDate(c *gin.Context) {
+	// Validation
+	var body dto.RangeDateDTO
+	if err := c.ShouldBindWith(&body, binding.Query); err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	userId, err := services.GetUserIdFromToken(c)
+	if err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	data, err := services.AttendanceByRangeDate(userId, body.StartDate, body.EndDate)
+	if err != nil {
+		response.ResponseError(c, err)
+	}
+
+	response.ResponseSucceed(c, data)
+}
+
+func AttendanceDetail(c *gin.Context) {
+	// Validation
+	var body dto.AttendanceDetailDTO
+	if err := c.ShouldBindWith(&body, binding.Query); err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	userId, err := services.GetUserIdFromToken(c)
+	if err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	attendance, history, err := services.AttendanceDetail(userId, body.IndexAttendance)
+	if err != nil {
+		response.ResponseError(c, err)
+	}
+
+	response.ResponseSucceed(c, gin.H{
+		"attendance": attendance,
+		"history":    history,
+	})
+}
+
+func AttendanceUpdate(c *gin.Context) {
+	// Validation
+	var body dto.AttendanceUpdateDTO
+	if err := c.ShouldBindWith(&body, binding.JSON); err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	userId, err := services.GetUserIdFromToken(c)
+	if err != nil {
+		response.ResponseError(c, err)
+		return
+	}
+
+	attendance, err := services.UpdateAttendance(userId, &body)
+	if err != nil {
+		response.ResponseError(c, err)
+	}
+
+	response.ResponseSucceed(c, attendance)
 }

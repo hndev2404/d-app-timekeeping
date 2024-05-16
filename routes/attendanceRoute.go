@@ -13,8 +13,13 @@ func AttendanceRoute(router *gin.RouterGroup) {
 	attendanceRouter.GET("/addressOwner", middlewares.Authentication, controllers.AttendanceOwner)
 
 	attendanceRouter.GET("/list", middlewares.Authentication, controllers.AttendanceList)
-	attendanceRouter.GET("/detail/:attendanceId", middlewares.Authentication, controllers.AttendanceDetail)
+	attendanceRouter.GET("/rangeDate", middlewares.Authentication, controllers.AttendanceByRangeDate)
+
+	attendanceRouter.GET("/detail", middlewares.Authentication, controllers.AttendanceDetail)
 
 	attendanceRouter.POST("/checkin", middlewares.Authentication, controllers.AttendanceCheckIn)
 	attendanceRouter.POST("/checkout", middlewares.Authentication, controllers.AttendanceCheckout)
+
+	attendanceRouter.POST("/update", middlewares.Authentication, controllers.AttendanceUpdate)
+
 }

@@ -1,9 +1,6 @@
 package services
 
 import (
-	"math"
-	"math/big"
-
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/hndev2404/interview_beearning/config"
 	"github.com/hndev2404/interview_beearning/contract"
@@ -87,11 +84,57 @@ func AttendanceCheckOut(userId uint, data *dto.CheckoutDTO) (*models.Attendance,
 	return attendance, err
 }
 
-func ConvertWeiToETH(wei string) (eth *big.Float) {
-	bigFloatBalance := new(big.Float)
-	bigFloatBalance.SetString(wei)
+func AttendanceList(userId uint) ([]contract.AttendanceData, error) {
+	employeeID := helpers.ConvertUintToBigInt(userId)
 
-	//  1eth = 10^18wei
-	eth = new(big.Float).Quo(bigFloatBalance, big.NewFloat(math.Pow10(18)))
-	return
+	result, err := config.ATTENDANCE_CONTRACT_INSTANCE.GetAllAttendanceByEmployeeID(nil, employeeID)
+	return result, err
+}
+
+func AttendanceByRangeDate(userId uint, startDate uint32, endDate uint32) ([]contract.AttendanceData, error) {
+	employeeID := helpers.ConvertUintToBigInt(userId)
+
+	count, result, err := config.ATTENDANCE_CONTRACT_INSTANCE.GetAttendanceByRangeDate(nil, employeeID, startDate, endDate)
+
+	// Only get range 0-count
+	newResult := result[:count.Int64()]
+
+	return newResult, err
+}
+
+func AttendanceDetail(userId uint, indexAttendance uint) (contract.AttendanceData, []contract.History, error) {
+	employeeID := helpers.ConvertUintToBigInt(userId)
+	index := helpers.ConvertUintToBigInt(indexAttendance)
+
+	attendance, history, err := config.ATTENDANCE_CONTRACT_INSTANCE.GetAttendanceDetail(nil, employeeID, index)
+	return attendance, history, err
+}
+
+func UpdateAttendance(userId uint, data *dto.AttendanceUpdateDTO) (*models.Attendance, error) {
+	employeeID := helpers.ConvertUintToBigInt(userId)
+
+	auth := config.AuthGenerator(config.ETH_CLIENT)
+	result, err := config.ATTENDANCE_CONTRACT_INSTANCE.UpdateAttendanceRecord(
+		auth,
+		employeeID,
+		data.Date,
+		data.CheckInTime,
+		data.CheckoutTime,
+		data.Reason,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+	// Storage Attendance to DB
+	attendance := &models.Attendance{
+		UserID:       userId,
+		Date:         data.Date,
+		CheckInTime:  data.CheckInTime,
+		CheckOutTime: data.CheckoutTime,
+	}
+	transactionHash := result.Hash().String()
+
+	err = attendance.UpdateAttendance(config.DB, *attendance, transactionHash, data.Reason)
+	return attendance, err
 }

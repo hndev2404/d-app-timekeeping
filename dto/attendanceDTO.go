@@ -23,3 +23,19 @@ type CheckoutDTO struct {
 	Date         uint32 `json:"date" binding:"required"`
 	CheckoutTime uint32 `json:"checkoutTime" binding:"required"`
 }
+
+type RangeDateDTO struct {
+	StartDate uint32 `form:"start_date" binding:"required"`
+	EndDate   uint32 `form:"end_date" binding:"required,gtfield=StartDate"`
+}
+
+type AttendanceDetailDTO struct {
+	IndexAttendance uint `form:"index_attendance" binding:"required"`
+}
+
+type AttendanceUpdateDTO struct {
+	Date         uint32 `json:"date" binding:"required"`
+	CheckInTime  uint32 `json:"checkInTime" binding:"required"`
+	CheckoutTime uint32 `json:"checkoutTime" binding:"required"`
+	Reason       string `json:"reason" binding:"required"`
+}
