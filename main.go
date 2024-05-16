@@ -20,6 +20,8 @@ func main() {
 	f, _ := os.Create(config.PATH_TO_LOG)
 	gin.DefaultWriter = io.MultiWriter(f)
 	router := gin.Default()
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
 
 	routes.Init(router)
 

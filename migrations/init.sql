@@ -1,17 +1,28 @@
-CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
-  "name" varchar,
-  "email" varchar,
-  "password" varchar
-);
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
 
-CREATE TABLE "attendance" (
-  "id" integer PRIMARY KEY,
-  "user_id" integer,
-  "location" varchar,
-  "address" varchar,
-  "checkin" datetime,
-  "checkout" datetime
-);
+    name VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255),
+	
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMPTZ
+) WITH (oids = false);
 
-ALTER TABLE "attendance" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+CREATE TABLE attendances (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+	
+    date INTEGER,
+	
+    check_in_time INTEGER,
+    check_out_time INTEGER,
+	
+    transaction_hash VARCHAR(255),
+	
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMPTZ
+);

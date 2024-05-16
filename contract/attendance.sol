@@ -105,11 +105,11 @@ contract AttendanceContract {
 
         require(
             checkInTime <= MAX_TIME,
-            "Checkin time must be less or equal to 24h(24*60*60)"
+            "CheckIn time must be less or equal to 24h(24*60*60)"
         );
         require(
             checkInTime >= MIN_TIME,
-            "Checkin date must be large or equal to 0"
+            "CheckIn date must be large or equal to 0"
         );
 
         require(
@@ -266,11 +266,11 @@ contract AttendanceContract {
         );
         require(
             checkInTime >= MIN_TIME,
-            "Checkint time must be large or equal to 0"
+            "CheckInt time must be large or equal to 0"
         );
         require(
             checkInTime <= checkOutTime,
-            "Checkint time must be less to Checkout time"
+            "CheckInt time must be less to Checkout time"
         );
 
         require(

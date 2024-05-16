@@ -9,7 +9,6 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/hndev2404/interview_beearning/config"
 	"github.com/hndev2404/interview_beearning/contract"
-	"github.com/hndev2404/interview_beearning/middlewares"
 )
 
 func main() {
@@ -30,7 +29,7 @@ func main() {
 }
 
 func deployContract(client *ethclient.Client) (common.Address, *types.Transaction, error) {
-	auth := middlewares.AuthGenerator(client)
+	auth := config.AuthGenerator(client)
 	contract, transaction, _, err := contract.DeployContract(auth, client)
 	return contract, transaction, err
 }

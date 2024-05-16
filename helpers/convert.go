@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"fmt"
+	"math/big"
 	"strconv"
 )
 
@@ -12,4 +13,10 @@ func ConvertStringToUint64(val string) (uint64, error) {
 	}
 
 	return uintValue, nil
+}
+
+func ConvertUintToBigInt(value uint) *big.Int {
+	bigInt := new(big.Int)
+	bigInt.SetUint64(uint64(value))
+	return bigInt
 }
